@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#xterm -e "pip install rospkg"
+xterm -e "pip install rospkg"
 
 #sleep 5
 
