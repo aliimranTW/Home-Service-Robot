@@ -15,7 +15,7 @@
 		<param name="update_min_a" value="0.1" />
 		<param name="initial_pose_x" value="0" />
 		<param name="initial_pose_y" value="0" />
-		<param name="laser_likelihood_max_dist" value="0.1"/>
+
 		<!--odom parameters-->
 		<param name="max_particles" value="200" />
 		<param name="odom_alpha1" value="0.006" />
