@@ -26,12 +26,12 @@ int main(int argc, char** argv){
   }
 
   move_base_msgs::MoveBaseGoal goal;
-  double goal_init_x =  -5.5653;
-  double goal_init_y = -1.7143;
+  double goal_init_x =  -7;
+  double goal_init_y = -2;
   double goal_init_w = 1.0;
   
-  double goal_final_x = -1.8893;
-  double goal_final_y = -5.613;
+  double goal_final_x = 0;
+  double goal_final_y = 0;
   double goal_final_w = 1.0;
 
   // set up the frame parameters
