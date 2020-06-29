@@ -11,7 +11,7 @@ int main( int argc, char** argv )
   // Set our initial shape type to be a cube
   uint32_t shape = visualization_msgs::Marker::CUBE;
 
-  while (ros::ok())
+  while(ros::ok())
   {
     visualization_msgs::Marker marker;
     // Set the frame ID and timestamp.  See the TF tutorials for information on these.
@@ -30,10 +30,22 @@ int main( int argc, char** argv )
     marker.action = visualization_msgs::Marker::ADD;
 
     // Set the pose of the marker.  This is a full 6DOF pose relative to the frame/time specified in the header
-    double x_start = -6;
+    double x_start = -6.8;
     double y_start = -2;
-    double x_final = 5;
+    double x_final = 4.2;
     double y_final = -2;
+    bool reached = false;
+    bool test_flag = false;
+    
+    // See if we have successfully received information from the pick_objects node
+    ros::NodeHandle nh("/pick_objects");
+    if(nh.hasParam("/AtPickupLoc") && nh.hasParam("/AtFinalLoc")) 
+    {
+      ROS_INFO("Both flags received from pick_objects node.");
+      nh.getParam("/AtPickupLoc", test_flag);
+    }
+    
+    
     marker.pose.position.x = x_start;
     marker.pose.position.y = y_start;
     marker.pose.position.z = 0;
@@ -43,9 +55,9 @@ int main( int argc, char** argv )
     marker.pose.orientation.w = 1.0;
 
     // Set the scale of the marker -- 1x1x1 here means 1m on a side
-    marker.scale.x = 0.2;
-    marker.scale.y = 0.2;
-    marker.scale.z = 0.2;
+    marker.scale.x = 0.4;
+    marker.scale.y = 0.4;
+    marker.scale.z = 0.4;
 
     // Set the color -- be sure to set alpha to something non-zero!
     marker.color.r = 1.0f;
@@ -68,14 +80,23 @@ int main( int argc, char** argv )
     ROS_INFO("Published at start position");
     r.sleep();
     
-    sleep(5);
+    // stay in the while loop till the time the robot reaches the pickup location
+    while(!reached)
+    {
+      nh.getParam("/AtPickupLoc", test_flag);
+      reached = test_flag;
+      r.sleep();
+    }
+    // stay there for 5 seconds to simulate pickup
     marker.action = visualization_msgs::Marker::DELETE;
     marker_pub.publish(marker);
-    ROS_INFO("Deleted from start position");
+    ROS_INFO("Object has been picked up");
     sleep(5);
     
     
     // FOR FINAL LOCATION
+    test_flag = false;
+    reached = false;
     marker.pose.position.x = x_final;
     marker.pose.position.y = y_final;
     marker.pose.position.z = 0;
@@ -85,8 +106,16 @@ int main( int argc, char** argv )
     marker.pose.orientation.w = 1.0;
     
     marker.action = visualization_msgs::Marker::ADD;
+    
+    // wait till the robot reaches the final position
+    while(!reached)
+    {
+      nh.getParam("/AtFinalLoc", test_flag);
+      reached = test_flag;
+    }
+    
     marker_pub.publish(marker);
-    ROS_INFO("Marker at final location");
+    ROS_INFO("Object has been dropped to the goal position");
     sleep(5);
   }
   return 0;

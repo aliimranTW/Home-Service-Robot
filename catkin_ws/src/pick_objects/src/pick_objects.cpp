@@ -25,12 +25,12 @@ int main(int argc, char** argv){
   }
 
   move_base_msgs::MoveBaseGoal goal;
-  double pickup_x =  -6;
-  double pickup_y = -2;
+  double pickup_x =  -6.8;
+  double pickup_y = -2.0;
   double pickup_w = 1.0;
   
-  double dest_x = 5;
-  double dest_y = -2;
+  double dest_x = 4.2;
+  double dest_y = -2.0;
   double dest_w = 1.0;
 
   // set up the frame parameters
@@ -50,13 +50,15 @@ int main(int argc, char** argv){
   ac.waitForResult();
 
   // Check if the robot reached its goal
-  if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+  if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED){
     ROS_INFO("Succesfully reached the pickup location");
+    nh.setParam("/AtPickupLoc", true);
+  }
+
   else
     ROS_INFO("Failed to reach the pickup location...");
 
   // inform that the robot has reached the pickup location
-  nh.setParam("/AtPickupLoc", true);
 
   // Define a position and orientation for the robot to reach
   goal.target_pose.pose.position.x = dest_x;
