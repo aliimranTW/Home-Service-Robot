@@ -60,6 +60,8 @@ int main(int argc, char** argv){
 
   // inform that the robot has reached the pickup location
 
+  // wait for 5 seconds
+  sleep(5);
   // Define a position and orientation for the robot to reach
   goal.target_pose.pose.position.x = dest_x;
   goal.target_pose.pose.position.y = dest_y;
