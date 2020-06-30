@@ -42,9 +42,28 @@ For navigation, we use the 2D nav_goal feature already present in RVIZ. To test 
 cd catkin_ws/src/scripts
 ./test_navigation.sh
 ```
+Use the 2D nav_goal to localize and navigate the robot at the desired location and orientation.
+
+Since the goal of the project is to develop an autonomous robot, the navigation operation has been automated by sending 2 goal positions to the navigation stack. The robot traverses in the environment while avoiding obstacles. Run the following lines of code to visualize it:
+
+```
+cd catkin_ws/src/scripts
+./pick_objects
+```
 
 ### Home Service Operation: 
 
-Using the aforementioned operations, we can use our robot for a transportation application. 
+Using the aforementioned operations, we can use our robot for the purpose of transporting objects. Since the tutetlebot does not have a robotic arm to manipulate objects, virtual objects have been created in RVIZ to simulate this operation. Run the following code to visualize markers at 2 locations.
+
+```
+cd catkin_ws/src/scripts
+./add_markers
+```
+Putting it all together, the following shell script can be run that runs to visualize the operation:
+
+```
+cd catkin_ws/src/scripts
+./home_service.sh
+```
 
 
