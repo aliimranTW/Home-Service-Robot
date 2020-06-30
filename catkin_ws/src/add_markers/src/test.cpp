@@ -34,7 +34,15 @@ int main( int argc, char** argv )
   double y_final = -2;
   bool reached = false;
   bool test_flag = false;
-     
+    
+  // See if we have successfully received information from the pick_objects node
+  ros::NodeHandle nh("/pick_objects");
+  if(nh.hasParam("/AtPickupLoc") && nh.hasParam("/AtFinalLoc")) 
+  {
+    ROS_INFO("Both flags received from pick_objects node.");
+    nh.getParam("/AtPickupLoc", test_flag);
+  }
+      
   marker.pose.position.x = x_start;
   marker.pose.position.y = y_start;
   marker.pose.position.z = 0;
@@ -65,36 +73,6 @@ int main( int argc, char** argv )
     ROS_WARN_ONCE("Please create a subscriber to the marker");
     sleep(1);
   }
-  
-    // See if we have successfully received information from the pick_objects node
-  ros::NodeHandle nh("/pick_objects");
-  if(nh.hasParam("/AtPickupLoc") && nh.hasParam("/AtFinalLoc")) 
-  {
-    ROS_INFO("Both flags received from pick_objects node.");
-    nh.getParam("/AtPickupLoc", test_flag);
-  }
-  else
-  {
-    marker_pub.publish(marker);
-    ROS_INFO("marker at initial position");
-    sleep(5);
-    marker.action = visualization_msgs::Marker::DELETE;
-  	marker_pub.publish(marker);
-  	ROS_INFO("Object has been deleted");
-  	sleep(5);
-  	marker.pose.position.x = x_final;
-  	marker.pose.position.y = y_final;
-  	marker.pose.position.z = 0;
-  	marker.pose.orientation.x = 0.0;
-  	marker.pose.orientation.y = 0.0;
-  	marker.pose.orientation.z = 0.0;
-  	marker.pose.orientation.w = 1.0;
-  	marker.action = visualization_msgs::Marker::ADD;
-    marker_pub.publish(marker);
-  	ROS_INFO("at final position");
-  	sleep(5);
-  }
-     
   marker_pub.publish(marker);
   ROS_INFO("Published at start position");
   r.sleep();
