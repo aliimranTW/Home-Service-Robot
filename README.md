@@ -34,7 +34,7 @@ source devel/setup.bash
 rosrun map_server map_saver map.yaml
 ```
 
-### Navigation:
+### Localization and Navigation:
 
 Next task of the robot is to localize itself in the new environment, inside the map built in the previous step. Localization has been performed using the Monte Carlo Localization algorithm. Again, a built-in ROS package has been used which implements the Adaptive Monte Carlo Localization (AMCL). 
 
