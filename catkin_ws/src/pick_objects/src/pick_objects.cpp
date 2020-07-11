@@ -3,7 +3,6 @@
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
 
-
 // Define a client for to send goal requests to the move_base server through a SimpleActionClient
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
@@ -25,12 +24,12 @@ int main(int argc, char** argv){
   }
 
   move_base_msgs::MoveBaseGoal goal;
-  double pickup_x =  -6.8;
-  double pickup_y = -2.0;
+  double pickup_x =  -6.82;
+  double pickup_y = -2.02;
   double pickup_w = 1.0;
   
-  double dest_x = 4.2;
-  double dest_y = -2.0;
+  double dest_x = 4.21;
+  double dest_y = -2.02;
   double dest_w = 1.0;
 
   // set up the frame parameters
@@ -58,8 +57,6 @@ int main(int argc, char** argv){
   else
     ROS_INFO("Failed to reach the pickup location...");
 
-  // inform that the robot has reached the pickup location
-
   // wait for 5 seconds
   sleep(5);
   // Define a position and orientation for the robot to reach
@@ -82,7 +79,6 @@ int main(int argc, char** argv){
 
   // inform that the goal location has been reached
   nh.setParam("/AtFinalLoc", true);
-
-
+  
   return 0;
 }
