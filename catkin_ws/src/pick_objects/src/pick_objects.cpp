@@ -24,12 +24,12 @@ int main(int argc, char** argv){
   }
 
   move_base_msgs::MoveBaseGoal goal;
-  double pickup_x =  -6.82;
-  double pickup_y = -2.02;
+  double pickup_x =  -6.80;
+  double pickup_y = -2.0;
   double pickup_w = 1.0;
   
-  double dest_x = 4.21;
-  double dest_y = -2.02;
+  double dest_x = 4.20;
+  double dest_y = -2.0;
   double dest_w = 1.0;
 
   // set up the frame parameters
